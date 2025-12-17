@@ -1,0 +1,24 @@
+CREATE TABLE users (
+    id INT unsigned NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE movies (
+    id INT unsigned NOT NULL AUTO_INCREMENT,
+    user_id INT unsigned NOT NULL,
+    imdb_id VARCHAR(50) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    director VARCHAR(100) NOT NULL,
+    year YEAR NOT NULL,
+    rating TINYINT unsigned NOT NULL,
+    comment TEXT,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CHECK (rating BETWEEN 1 AND 5),
+    UNIQUE KEY uk_user_movies_user_imdb (user_id, imdb_id),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
